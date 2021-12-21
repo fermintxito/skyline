@@ -1,5 +1,7 @@
 package skyline.domain;
 
-public class Student {
+import java.util.UUID;
 
+public class Student {
+	private UUID id = UUID.randomUUID();
 }
