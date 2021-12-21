@@ -1,5 +1,5 @@
 package skyline.repository;
 
-public class StudentRepository {
+public interface StudentRepository {
 
 }
