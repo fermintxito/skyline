@@ -15,6 +15,11 @@ public class SkylineMain {
 		String inputFile = null;
 		String outputFile = "output.txt";
 
+		if (args.length > 4) {
+			System.out.println("Too much args, see [skyline -h] for help\r\n");
+			return;
+		}
+
 		for (String a : args) {
 			switch (a) {
 			case SHOW_TRACE:
