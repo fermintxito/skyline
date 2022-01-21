@@ -1,5 +1,12 @@
 package main;
 
+import java.util.ArrayList;
+
+import main.common.CommonApiFile;
+import main.common.CommonApiMenu;
+import main.domain.Building;
+import main.domain.Skyline;
+
 public class SkylineMain {
 
 	private static final String SHOW_TRACE = "-t";
@@ -13,10 +20,13 @@ public class SkylineMain {
 		boolean isInput = true;
 
 		String inputFile = null;
-		String outputFile = "output.txt";
+		String outputFile = "pruebas/output.txt";
 
 		if (args.length > 4) {
 			System.out.println("Too much args, see [skyline -h] for help\r\n");
+			return;
+		} else if (args.length < 1) {
+			System.out.println("Not enough arguments, see [skyline -h] for help\r\n");
 			return;
 		}
 
@@ -26,7 +36,7 @@ public class SkylineMain {
 				showTrace = true;
 				continue;
 			case SHOW_HELP:
-				System.out.println(showHelp());
+				System.out.println(CommonApiMenu.showHelp());
 				continue;
 			}
 
@@ -38,29 +48,30 @@ public class SkylineMain {
 			}
 		}
 
-		System.out.println(showFileNames(inputFile, outputFile));
+		Building[] edificios = CommonApiFile.readFile(inputFile);
+		DyV dyv = new DyV();
+		ArrayList<Skyline> skylines = dyv.obtenerSkyLines(edificios, 0, (edificios.length - 1));
+
+		boolean isFirst = true;
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		for (Skyline s : skylines) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				sb.append(",");
+			}
+
+			sb.append("(");
+			sb.append(s.abscisa + "," + s.height);
+			sb.append(")");
+
+		}
+		sb.append("}");
+
+		CommonApiFile.createAndWriteFile(outputFile, sb.toString());
+		System.out.println(CommonApiMenu.showFileNames(inputFile, outputFile));
 		System.out.println("Close Skyline\r\n");
-	}
-
-	private static String showHelp() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("SINTAXIS: skyline [-t][-h] [fichero entrada] [fichero salida]\r\n");
-		sb.append("-t Traza cada llamada recursiva y sus parámetros\r\n");
-		sb.append("-h Muestra esta ayuda\r\n");
-		sb.append("[fichero entrada] Conjunto de edificios de la ciudad\r\n");
-		sb.append("[fichero salida] Secuencia que representan el skyline de la ciudad\r\n");
-
-		return sb.toString();
-	}
-
-	private static String showFileNames(String inputFile, String outputFile) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("fichero entrada: " + inputFile + "\r\n");
-		sb.append("fichero salida: " + outputFile + "\r\n");
-
-		return sb.toString();
 	}
 
 }
