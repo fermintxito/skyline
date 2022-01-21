@@ -5,6 +5,8 @@ import main.common.CommonApiMenu;
 
 public class SkylineMain {
 
+	private static final String DEFAULT_OUTPUT = "pruebas/output/defaultOutput.txt";
+
 	private static final String SHOW_TRACE = "-t";
 	private static final String SHOW_HELP = "-h";
 
@@ -15,7 +17,7 @@ public class SkylineMain {
 		boolean isInput = true;
 
 		String inputFile = null;
-		String outputFile = "pruebas/defaultOutput.txt";
+		String outputFile = DEFAULT_OUTPUT;
 
 		if (args.length > 4) {
 			System.out.println("Too much args, see [skyline -h] for help\r\n");
