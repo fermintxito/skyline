@@ -1,1 +1,1 @@
-https://programmerclick.com/article/4183829861/
+{(1,3),(2,4),(4,2),(6,3),(7,0)}

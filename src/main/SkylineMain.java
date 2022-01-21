@@ -1,11 +1,13 @@
 package main;
 
+import static java.util.Objects.isNull;
+
 import main.common.CommonApiDate;
 import main.common.CommonApiMenu;
 
 public class SkylineMain {
 
-	private static final String DEFAULT_OUTPUT = "pruebas/output/defaultOutput.txt";
+	private static final String DEFAULT_OUTPUT = "defaultOutput.txt";
 
 	private static final String SHOW_TRACE = "-t";
 	private static final String SHOW_HELP = "-h";
@@ -44,6 +46,9 @@ public class SkylineMain {
 				outputFile = a;
 			}
 		}
+
+		if (isNull(inputFile))
+			return;
 
 		DyV.run(inputFile, outputFile, showTrace);
 		System.out.println(CommonApiDate.dateNowToString() + " || Close Skyline\r\n");
