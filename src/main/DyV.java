@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import main.common.CommonApiDate;
 import main.common.CommonApiFile;
@@ -11,7 +12,7 @@ public class DyV {
 
 	public static void run(String inputFile, String outputFile, boolean showTrace) {
 		Building[] buildings = CommonApiFile.readFile(inputFile);
-		ArrayList<Skyline> skylines = obtenerSkyLines(buildings, 0, (buildings.length - 1), showTrace);
+		List<Skyline> skylines = obtenerSkyLines(buildings, 0, (buildings.length - 1), showTrace);
 
 		boolean isFirst = true;
 		StringBuilder sb = new StringBuilder();
@@ -33,7 +34,10 @@ public class DyV {
 		CommonApiFile.createAndWriteFile(outputFile, sb.toString());
 	}
 
-	private static ArrayList<Skyline> obtenerSkyLines(Building[] edificios, int i, int j, boolean showTrace) {
+	private static List<Skyline> obtenerSkyLines(Building[] edificios, int i, int j, boolean showTrace) {
+		if (edificios.length == 0)
+			return new ArrayList<Skyline>();
+
 		if (showTrace)
 			trace("obtenerSkyLines i : " + i + ", j: " + j);
 
@@ -46,15 +50,14 @@ public class DyV {
 			return s;
 		} else {
 			int m = (i + j - 1) / 2;
-			ArrayList<Skyline> sa = obtenerSkyLines(edificios, i, m, showTrace);
-			ArrayList<Skyline> sb = obtenerSkyLines(edificios, m + 1, j, showTrace);
+			List<Skyline> sa = obtenerSkyLines(edificios, i, m, showTrace);
+			List<Skyline> sb = obtenerSkyLines(edificios, m + 1, j, showTrace);
 			return combinarSkyLines(sa, sb, showTrace);
 		}
 
 	}
 
-	private static ArrayList<Skyline> combinarSkyLines(ArrayList<Skyline> sa, ArrayList<Skyline> sb,
-			boolean showTrace) {
+	private static List<Skyline> combinarSkyLines(List<Skyline> sa, List<Skyline> sb, boolean showTrace) {
 		if (showTrace)
 			trace("combinarSkyLines sa : " + skylinesToString(sa) + ", sb: " + skylinesToString(sb));
 
@@ -106,7 +109,7 @@ public class DyV {
 		System.out.println(date + " || " + trace + "\r\n");
 	}
 
-	private static String skylinesToString(ArrayList<Skyline> skylines) {
+	private static String skylinesToString(List<Skyline> skylines) {
 		StringBuilder sb = new StringBuilder();
 
 		skylines.forEach(s -> sb.append(s.toString()));
