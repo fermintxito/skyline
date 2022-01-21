@@ -27,4 +27,16 @@ public class Skyline {
 		this.height = height;
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(" Skyline [ ");
+		sb.append("abscisa: " + abscisa + ",");
+		sb.append("height: " + height + ",");
+		sb.append("] ");
+
+		return sb.toString();
+
+	}
+
 }

@@ -2,12 +2,41 @@ package main;
 
 import java.util.ArrayList;
 
+import main.common.CommonApiDate;
+import main.common.CommonApiFile;
 import main.domain.Building;
 import main.domain.Skyline;
 
 public class DyV {
 
-	public ArrayList<Skyline> obtenerSkyLines(Building[] edificios, int i, int j) {
+	public static void run(String inputFile, String outputFile, boolean showTrace) {
+		Building[] buildings = CommonApiFile.readFile(inputFile);
+		ArrayList<Skyline> skylines = obtenerSkyLines(buildings, 0, (buildings.length - 1), showTrace);
+
+		boolean isFirst = true;
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		for (Skyline s : skylines) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				sb.append(",");
+			}
+
+			sb.append("(");
+			sb.append(s.abscisa + "," + s.height);
+			sb.append(")");
+
+		}
+		sb.append("}");
+
+		CommonApiFile.createAndWriteFile(outputFile, sb.toString());
+	}
+
+	private static ArrayList<Skyline> obtenerSkyLines(Building[] edificios, int i, int j, boolean showTrace) {
+		if (showTrace)
+			trace("obtenerSkyLines i : " + i + ", j: " + j);
+
 		int n = j - i + 1;
 		if (n == 1) {
 			ArrayList<Skyline> s = new ArrayList<Skyline>();
@@ -17,14 +46,17 @@ public class DyV {
 			return s;
 		} else {
 			int m = (i + j - 1) / 2;
-			ArrayList<Skyline> sa = obtenerSkyLines(edificios, i, m);
-			ArrayList<Skyline> sb = obtenerSkyLines(edificios, m + 1, j);
-			return combinarSkyLines(sa, sb);
+			ArrayList<Skyline> sa = obtenerSkyLines(edificios, i, m, showTrace);
+			ArrayList<Skyline> sb = obtenerSkyLines(edificios, m + 1, j, showTrace);
+			return combinarSkyLines(sa, sb, showTrace);
 		}
 
 	}
 
-	public ArrayList<Skyline> combinarSkyLines(ArrayList<Skyline> sa, ArrayList<Skyline> sb) {
+	private static ArrayList<Skyline> combinarSkyLines(ArrayList<Skyline> sa, ArrayList<Skyline> sb,
+			boolean showTrace) {
+		if (showTrace)
+			trace("combinarSkyLines sa : " + skylinesToString(sa) + ", sb: " + skylinesToString(sb));
 
 		ArrayList<Skyline> s = new ArrayList<Skyline>();
 
@@ -67,5 +99,18 @@ public class DyV {
 		}
 
 		return s;
+	}
+
+	private static void trace(String trace) {
+		String date = CommonApiDate.dateNowToString();
+		System.out.println(date + " || " + trace + "\r\n");
+	}
+
+	private static String skylinesToString(ArrayList<Skyline> skylines) {
+		StringBuilder sb = new StringBuilder();
+
+		skylines.forEach(s -> sb.append(s.toString()));
+
+		return sb.toString();
 	}
 }

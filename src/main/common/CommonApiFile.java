@@ -21,11 +21,10 @@ public class CommonApiFile {
 				String[] split = data.split(",");
 				edificios.add(new Building(Integer.parseInt(split[0]), Integer.parseInt(split[1]),
 						Integer.parseInt(split[2])));
-				System.out.println(data);
 			}
 			myReader.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
+			System.out.println("An error occurred.\r\n");
 			e.printStackTrace();
 		}
 
@@ -41,12 +40,10 @@ public class CommonApiFile {
 		try {
 			File myObj = new File(filename);
 			if (myObj.createNewFile()) {
-				System.out.println("File created: " + myObj.getName());
-			} else {
-				System.out.println("File already exists.");
+				System.out.println("File created: " + myObj.getName() + "\r\n");
 			}
 		} catch (IOException e) {
-			System.out.println("An error occurred.");
+			System.out.println("An error occurred.\r\n");
 			e.printStackTrace();
 		}
 	}
@@ -56,9 +53,9 @@ public class CommonApiFile {
 			FileWriter myWriter = new FileWriter(filename);
 			myWriter.write(text);
 			myWriter.close();
-			System.out.println("Successfully wrote to the file.");
+			System.out.println("Successfully wrote to the file: " + filename + "\r\n");
 		} catch (IOException e) {
-			System.out.println("An error occurred.");
+			System.out.println("An error occurred.\r\n");
 			e.printStackTrace();
 		}
 	}

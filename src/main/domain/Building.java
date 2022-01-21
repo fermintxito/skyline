@@ -39,11 +39,11 @@ public class Building {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Building [ /r/n");
-		sb.append("left: " + left + ",/r/n");
-		sb.append("right: " + right + ",/r/n");
-		sb.append("height: " + height + ",/r/n");
-		sb.append("]");
+		sb.append(" Building [ ");
+		sb.append("left: " + left + ",");
+		sb.append("right: " + right + ",");
+		sb.append("height: " + height + ",");
+		sb.append("] ");
 
 		return sb.toString();
 
