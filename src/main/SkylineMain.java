@@ -15,7 +15,7 @@ public class SkylineMain {
 		boolean isInput = true;
 
 		String inputFile = null;
-		String outputFile = "pruebas/output.txt";
+		String outputFile = "pruebas/defaultOutput.txt";
 
 		if (args.length > 4) {
 			System.out.println("Too much args, see [skyline -h] for help\r\n");
